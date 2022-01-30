@@ -1,0 +1,13 @@
+---
+BreakBeforeBraces: Linux
+AlignAfterOpenBracket: Align
+AlignArrayOfStructures: Left
+AlignTrailingComments: true
+AllowAllArgumentsOnNextLine: true
+AllowShortBlocksOnASingleLine: Always
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortIfStatementsOnASingleLine: AllIfsAndElse
+PointerAlignment: Left
+IndentWidth: 4
+ColumnLimit: 90
+...
