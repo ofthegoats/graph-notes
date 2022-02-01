@@ -12,4 +12,6 @@ void remove_node(graph*, void*);
 void add_edge(graph*, void*, void*);
 void remove_edge(graph*, void*, void*);
 
+struct linked_list* find_node(graph*, void*);
+
 #endif // GRAPH_H_
