@@ -10,8 +10,8 @@ struct node {
     struct node* next;
 };
 
-void append(struct linked_list*, void*);
-void remove(struct linked_list*, void*);
+struct node* append(struct linked_list*, void*);
+void pop(struct linked_list*, void*);
 struct node* search(struct linked_list*, void*);
 
 #endif // LINKED_LIST_H_
