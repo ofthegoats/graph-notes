@@ -1,0 +1,7 @@
+.idea
+*.log
+tmp/
+*.o
+a.out
+graph-notes
+.gdb_history
