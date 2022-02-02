@@ -6,11 +6,18 @@ struct node* append(struct linked_list* ll, void* val)
 {
     // allocate memory for the new element in the list
     struct node* n;
+    struct node* current = ll->head;
     n = (struct node*)malloc(sizeof(struct node));
     n->val = val;
-    // append at head
-    n->next = ll->head;
-    ll->head = n;
+    n->next = NULL;
+    if (!current) { // special case, empty list
+        ll->head = n;
+    } else {
+        while (current->next) {
+            current = current->next;
+        }
+        current->next = n;
+    }
     return n;
 }
 
