@@ -17,6 +17,7 @@ int main(int argc, char* argv[])
     remove_node_test();
     add_edge_test();
     remove_edge_test();
+    return 0;
 }
 
 void print_graph(graph* g)
