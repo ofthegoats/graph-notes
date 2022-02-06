@@ -5,3 +5,4 @@ tmp/
 a.out
 graph-notes
 .gdb_history
+*.db
