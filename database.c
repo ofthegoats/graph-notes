@@ -1,8 +1,12 @@
 #include "database.h"
+#include "graph.h"
 
 #include <sqlite3.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+int graph_build_nodes_cb(void*, int, char**, char**);
+int graph_build_edges_cb(void*, int, char**, char**);
 
 int db_prepare(const char* filename)
 {
@@ -137,4 +141,54 @@ int db_remove_edge(const char* filename, void* src, void* dest)
     }
     sqlite3_close(db);
     return DB_OP_SUCCESS;
+}
+
+graph db_get_graph(const char* filename)
+{
+    graph g = {NULL};
+    sqlite3* db;
+    char* err_msg = NULL;
+    int rc;
+    rc = sqlite3_open(filename, &db);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "opening database failed\n");
+        sqlite3_close(db);
+        graph g = {NULL};
+        return g;
+    }
+    rc = sqlite3_exec(db, "SELECT * FROM Node;", graph_build_nodes_cb, &g, &err_msg);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "failed building nodes from database: %s\n", err_msg);
+        sqlite3_close(db);
+        graph g = {NULL};
+        return g;
+    }
+    rc = sqlite3_exec(db, "SELECT * FROM Edge;", graph_build_edges_cb, &g, &err_msg);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "failed building edges from database: %s\n", err_msg);
+        sqlite3_close(db);
+        graph g = {NULL};
+        return g;
+    }
+    return g;
+}
+
+int graph_build_nodes_cb(void* p, int count, char** dat, char** col)
+{
+    graph* g = (graph*)p;
+    int id;
+    sscanf(dat[0], "%d", &id);
+    add_node(g, (void*)id);
+    return 0;
+}
+
+int graph_build_edges_cb(void* p, int count, char** dat, char** col)
+{
+    graph* g = (graph*)p;
+    int src;
+    int dest;
+    sscanf(dat[0], "%d", &src);
+    sscanf(dat[1], "%d", &dest);
+    add_edge(g, (void*)src, (void*)dest);
+    return 0;
 }
