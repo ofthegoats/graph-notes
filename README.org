@@ -1,5 +1,7 @@
 #+TITLE: graph-notes
 
+*This project has been replaced with [[https://github.com/ofthegoats/graph-notes-cxx][graph-notes-cxx]]*
+
 Graph-Notes is an application for taking handwritten notes and storing them as a graph.
 
 It uses gtk+-3.0, cairo, and sqlite3.
